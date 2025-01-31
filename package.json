@@ -1,0 +1,12 @@
+{
+  "name": "s85_maggie_mart",
+  "version": "1.0.0",
+  "description": "Project Title:  \r MaggieMart",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "SHIVANG",
+  "license": "ISC"
+}
