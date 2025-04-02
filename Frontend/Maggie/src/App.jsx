@@ -1,13 +1,19 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import ProductCard from './components/ProductCard';
+import SellForm from './components/SellForm';
 
 function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showSellForm, setShowSellForm] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = () => {
+    fetch('http://localhost:5000/products')
       .then((res) => {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
@@ -15,13 +21,12 @@ function App() {
       .then((data) => {
         setProducts(data);
         setLoading(false);
-        console.log(data);
       })
       .catch((err) => {
         console.error('Error fetching products:', err);
         setLoading(false);
       });
-  }, []);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
@@ -44,11 +49,17 @@ function App() {
           <button className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600">
             Buy Items
           </button>
-          <button className="bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600">
-            Sell Items
+          <button 
+            onClick={() => setShowSellForm(!showSellForm)}
+            className="bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600"
+          >
+            {showSellForm ? "Close Form" : "Sell Items"}
           </button>
         </div>
       </section>
+
+      {/* Sell Form - Visible only when Sell is clicked */}
+      {showSellForm && <SellForm fetchProducts={fetchProducts} />}
 
       {/* Product Grid */}
       <section className="p-8 flex-1">

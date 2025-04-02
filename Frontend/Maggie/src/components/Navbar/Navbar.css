@@ -1,0 +1,55 @@
+.navbar {
+  padding: 1rem 2rem;
+  background-color: #222; /* Darker shade for better contrast */
+  color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.navbar a:hover {
+  color: #00bcd4; /* Brighter hover effect */
+  background: rgba(255, 255, 255, 0.1); /* Soft hover effect */
+}
+
+/* Responsive navbar for smaller screens */
+@media (max-width: 768px) {
+  .navbar {
+      flex-direction: column;
+      text-align: center;
+      padding: 1rem;
+  }
+
+  .navbar a {
+      display: block;
+      margin: 5px 0;
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Align left and right sections */
+  align-items: center; /* Vertically align items */
+  padding: 10px 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px; /* Adds spacing between items */
+  list-style: none;
+  align-items: center; /* Ensures all items align in the center */
+}

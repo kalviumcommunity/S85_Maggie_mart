@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // Allow frontend to access backend
+app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON bodies
 
 // MongoDB Connection
@@ -17,41 +17,46 @@ if (!process.env.DB_URI) {
 }
 
 mongoose.connect(process.env.DB_URI)
-  .then(() => console.log('Connected to MongoDB successfully'))
-  .catch((err) => console.error('MongoDB Connection Error:', err));
+  .then(() => console.log('✅ Connected to MongoDB successfully'))
+  .catch((err) => console.error('❌ MongoDB Connection Error:', err));
 
-const db = mongoose.connection;
-db.on('error', (err) => console.error('MongoDB Connection Error:', err));
-db.once('open', () => console.log('Connected to MongoDB successfully'));
+const Product = require('./models/product'); 
+const sell = require('./models/sell')
 
-// Routes
 app.get('/', (req, res) => {
-  res.json({ dbStatus: db.readyState === 1 ? 'Connected' : 'Not Connected' });
+  res.json({ dbStatus: mongoose.connection.readyState === 1 ? 'Connected' : 'Not Connected' });
 });
 
-// Product Routes
-const Product = require('./models/product');
 
-// Create Product
-app.post('/api/products', async (req, res) => {
+app.post('/sell', async (req, res) => {
   try {
-    const newProduct = new Product(req.body);
-    await newProduct.save();
-    res.status(201).json(newProduct);
+    const { ProductName, Price, Quantity, RoomNumber, Contact } = req.body;
+ 
+    if (!ProductName || !Price || !Quantity || !RoomNumber || !Contact) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+
+    const create=await sell.create({
+      ProductName, Price, Quantity, RoomNumber, Contact
+    })
+    res.status(201).json(create)
+
   } catch (err) {
-    res.status(500).json({ error: 'Failed to add product', details: err });
+    console.error("❌ Error adding product:", err.message);
+    return res.status(500).json({ error: "Internal server error", message: err.message });
   }
 });
 
-// Get All Products
-app.get('/api/products', async (req, res) => {
+// ✅ Get All Products
+app.get('/products', async (req, res) => {
   try {
-    const products = await Product.find();
-    res.json(products);
+    const products = await Product.find(); // Exclude __v field
+    return res.json(products);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch products', details: err });
+    console.error("❌ Error fetching products:", err.message);
+    return res.status(500).json({ error: "Failed to fetch products", message: err.message });
   }
 });
 
-// Server Start
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// ✅ Server Start
+app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
