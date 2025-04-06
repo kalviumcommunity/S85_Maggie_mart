@@ -7,8 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // Enable CORS
-app.use(express.json()); // Parse JSON bodies
+app.use(cors());
+app.use(express.json());
 
 // MongoDB Connection
 if (!process.env.DB_URI) {
@@ -20,26 +20,23 @@ mongoose.connect(process.env.DB_URI)
   .then(() => console.log('✅ Connected to MongoDB successfully'))
   .catch((err) => console.error('❌ MongoDB Connection Error:', err));
 
-const Product = require('./models/product'); 
-const sell = require('./models/sell')
+const sell = require('./models/sell');
 
 app.get('/', (req, res) => {
   res.json({ dbStatus: mongoose.connection.readyState === 1 ? 'Connected' : 'Not Connected' });
 });
 
-
+// Create (Sell an Item)
 app.post('/sell', async (req, res) => {
   try {
     const { ProductName, Price, Quantity, RoomNumber, Contact } = req.body;
- 
+
     if (!ProductName || !Price || !Quantity || !RoomNumber || !Contact) {
       return res.status(400).json({ error: "All fields are required." });
     }
 
-    const create=await sell.create({
-      ProductName, Price, Quantity, RoomNumber, Contact
-    })
-    res.status(201).json(create)
+    const created = await sell.create({ ProductName, Price, Quantity, RoomNumber, Contact });
+    res.status(201).json(created);
 
   } catch (err) {
     console.error("❌ Error adding product:", err.message);
@@ -47,10 +44,10 @@ app.post('/sell', async (req, res) => {
   }
 });
 
-// ✅ Get All Products
+// Read (Get all Sell Items)
 app.get('/products', async (req, res) => {
   try {
-    const products = await Product.find(); // Exclude __v field
+    const products = await sell.find(); // ✅ Using sell model
     return res.json(products);
   } catch (err) {
     console.error("❌ Error fetching products:", err.message);
@@ -58,5 +55,5 @@ app.get('/products', async (req, res) => {
   }
 });
 
-// ✅ Server Start
+// Server Start
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
