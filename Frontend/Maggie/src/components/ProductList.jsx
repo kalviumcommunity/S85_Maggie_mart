@@ -6,7 +6,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products') // 🔁 Update this if your API path is different
+    axios.get('http://localhost:5000/products') // Correct endpoint path
       .then(response => setProducts(response.data))
       .catch(error => console.error("Error fetching products:", error));
   }, []);
