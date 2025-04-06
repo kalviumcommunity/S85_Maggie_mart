@@ -1,11 +1,43 @@
-function ProductCard({ product }) {
+import React, { useState } from 'react';
+import './ProductCard.css';
+import Modal from './Modal';
+
+function ProductCard({ product, onDelete, onUpdate }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleEdit = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleUpdate = (updatedProduct) => {
+    onUpdate(updatedProduct); // Call the update function passed as a prop
+    setIsModalOpen(false); // Close the modal
+  };
+
   return (
-    <div className="bg-white shadow-md rounded-lg p-4">
-      <h4 className="text-xl font-semibold">{product.ProductName}</h4>
-      <p className="text-gray-700">Price: ₹{product.Price}</p>
-      <p className="text-gray-700">Quantity: {product.Quantity}</p>
-      <p className="text-gray-700">Room: {product.RoomNumber}</p>
-      <p className="text-gray-700">Contact: {product.Contact}</p>
+    <div className="product-card">
+      <h4 className="product-name">{product.ProductName}</h4>
+      <p className="product-detail">Price: ₹{product.Price}</p>
+      <p className="product-detail">Quantity: {product.Quantity}</p>
+      <p className="product-detail">Room: {product.RoomNumber}</p>
+      <p className="product-detail">Contact: {product.Contact}</p>
+      <div className="product-card-actions">
+        <button className="edit-button" onClick={handleEdit}>Edit</button>
+        <button className="delete-button" onClick={() => onDelete(product._id)}>
+          Delete
+        </button>
+      </div>
+      {isModalOpen && (
+        <Modal
+          product={product}
+          onClose={handleCloseModal}
+          onUpdate={handleUpdate}
+        />
+      )}
     </div>
   );
 }

@@ -7,7 +7,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // Replace with your frontend's URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
+
 app.use(express.json());
 
 // MongoDB Connection
@@ -55,5 +59,53 @@ app.get('/products', async (req, res) => {
   }
 });
 
-// Server Start
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.delete('/products/:id', async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    console.log('Invalid product ID:', id); // Debugging
+    return res.status(400).json({ error: 'Invalid product ID' });
+  }
+
+  try {
+    const deletedProduct = await sell.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (err) {
+    console.error('❌ Error deleting product:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.put('/products/:id', async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid product ID' });
+  }
+
+  try {
+    const updatedProduct = await sell.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+
+    if (!updatedProduct) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    console.error('❌ Error updating product:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.listen(PORT, ()=>{
+  console.log(`Server is running at ${PORT}`)
+})

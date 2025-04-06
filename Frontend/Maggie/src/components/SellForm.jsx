@@ -9,6 +9,8 @@ function SellForm({ fetchProducts }) {
     Contact: '',
   });
 
+  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -30,32 +32,45 @@ function SellForm({ fetchProducts }) {
       setFormData({ ProductName: '', Price: '', Quantity: '', RoomNumber: '', Contact: '' });
 
       fetchProducts(); // 🔥 Update product cards
+
+      // Show success message
+      setSuccessMessage('Product added successfully!');
+      setTimeout(() => setSuccessMessage(''), 3000); // Hide after 3 seconds
     } catch (err) {
       console.error('❌ Error:', err.message);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <h3 className="text-xl font-bold mb-4">Sell an Item</h3>
-      {['ProductName', 'Price', 'Quantity', 'RoomNumber', 'Contact'].map((field) => (
-        <input
-          key={field}
-          name={field}
-          value={formData[field]}
-          onChange={handleChange}
-          placeholder={field}
-          className="w-full mb-4 p-2 border border-gray-300 rounded"
-          required
-        />
-      ))}
-      <button
-        type="submit"
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-      >
-        Submit
-      </button>
-    </form>
+    <div className="relative">
+      {/* Success Message */}
+      {successMessage && (
+        <div className="absolute top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-fade-in">
+          {successMessage}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h3 className="text-xl font-bold mb-4">Sell an Item</h3>
+        {['ProductName', 'Price', 'Quantity', 'RoomNumber', 'Contact'].map((field) => (
+          <input
+            key={field}
+            name={field}
+            value={formData[field]}
+            onChange={handleChange}
+            placeholder={field}
+            className="w-full mb-4 p-2 border border-gray-300 rounded"
+            required
+          />
+        ))}
+        <button
+          type="submit"
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }
 
