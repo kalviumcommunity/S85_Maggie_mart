@@ -1,16 +1,13 @@
-import React from 'react';
-
-const ProductCard = ({ product }) => {
+function ProductCard({ product }) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
-      <div className="p-4">
-        <h3 className="text-xl font-bold text-gray-800 mb-2">{product.name}</h3>
-        <p className="text-gray-600 mb-2">{product.description}</p>
-        <p className="text-green-600 font-semibold">₹{product.price}</p>
-      </div>
+    <div className="bg-white shadow-md rounded-lg p-4">
+      <h4 className="text-xl font-semibold">{product.ProductName}</h4>
+      <p className="text-gray-700">Price: ₹{product.Price}</p>
+      <p className="text-gray-700">Quantity: {product.Quantity}</p>
+      <p className="text-gray-700">Room: {product.RoomNumber}</p>
+      <p className="text-gray-700">Contact: {product.Contact}</p>
     </div>
   );
-};
+}
 
 export default ProductCard;

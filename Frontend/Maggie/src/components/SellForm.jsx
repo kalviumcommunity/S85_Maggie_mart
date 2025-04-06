@@ -6,7 +6,7 @@ function SellForm({ fetchProducts }) {
     Price: '',
     Quantity: '',
     RoomNumber: '',
-    Contact: ''
+    Contact: '',
   });
 
   const handleChange = (e) => {
@@ -15,34 +15,47 @@ function SellForm({ fetchProducts }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const response = await fetch('http://localhost:5000/sell', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
+    try {
+      const res = await fetch('http://localhost:5000/sell', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-    if (response.ok) {
-      alert("Product added successfully!");
+      if (!res.ok) throw new Error('Failed to sell product');
+      
+      const data = await res.json();
+      console.log("✅ Product sold:", data);
+
       setFormData({ ProductName: '', Price: '', Quantity: '', RoomNumber: '', Contact: '' });
-      fetchProducts(); 
-    } else {
-      alert("Failed to add product.");
+
+      fetchProducts(); // 🔥 Update product cards
+    } catch (err) {
+      console.error('❌ Error:', err.message);
     }
   };
 
   return (
-    <div className="p-6 bg-white shadow-md rounded-lg mx-auto max-w-lg">
-      <h2 className="text-2xl font-semibold text-center mb-4">Add a Product</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input type="text" name="ProductName" value={formData.ProductName} onChange={handleChange} placeholder="Product Name" className="w-full p-2 border rounded"/>
-        <input type="number" name="Price" value={formData.Price} onChange={handleChange} placeholder="Price" className="w-full p-2 border rounded"/>
-        <input type="number" name="Quantity" value={formData.Quantity} onChange={handleChange} placeholder="Quantity" className="w-full p-2 border rounded"/>
-        <input type="text" name="RoomNumber" value={formData.RoomNumber} onChange={handleChange} placeholder="Room Number" className="w-full p-2 border rounded"/>
-        <input type="text" name="Contact" value={formData.Contact} onChange={handleChange} placeholder="Contact" className="w-full p-2 border rounded"/>
-        <button type="submit" className="bg-green-500 text-white w-full p-2 rounded hover:bg-green-600">Submit</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h3 className="text-xl font-bold mb-4">Sell an Item</h3>
+      {['ProductName', 'Price', 'Quantity', 'RoomNumber', 'Contact'].map((field) => (
+        <input
+          key={field}
+          name={field}
+          value={formData[field]}
+          onChange={handleChange}
+          placeholder={field}
+          className="w-full mb-4 p-2 border border-gray-300 rounded"
+          required
+        />
+      ))}
+      <button
+        type="submit"
+        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+      >
+        Submit
+      </button>
+    </form>
   );
 }
 
