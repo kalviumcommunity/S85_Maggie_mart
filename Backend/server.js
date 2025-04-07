@@ -106,6 +106,52 @@ app.put('/products/:id', async (req, res) => {
   }
 });
 
+
+
+const User = require('./models/user');
+
+// Signup Route
+app.post('/signup', async (req, res) => {
+  const { email, password, name } = req.body;
+
+  if (!email || !password || !name) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+
+    const newUser = new User({ email, password, name });
+    await newUser.save();
+
+    res.status(201).json({ message: 'Signup successful', name: newUser.name });
+  } catch (err) {
+    console.error('Error during signup:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Login Route
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email, password });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    res.status(200).json({ message: 'Login successful' });
+  } catch (err) {
+    console.error('Error during login:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.listen(PORT, ()=>{
   console.log(`Server is running at ${PORT}`)
 })
+

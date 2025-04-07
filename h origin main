@@ -1,0 +1,67 @@
+*   [33m75c7374[m[33m ([m[1;32mUpdateDelete[m[33m)[m Merge branch 'main' of https://github.com/kalviumcommunity/S85_Maggie_mart into UpdateDelete
+[31m|[m[32m\[m  
+[31m|[m *   [33mf0bb3e6[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #10 from kalviumcommunity/UpdateDelete
+[31m|[m [33m|[m[34m\[m  
+[31m|[m * [34m\[m   [33md31bb15[m Merge pull request #9 from kalviumcommunity/BackendToFrontendFetchData
+[31m|[m [35m|[m[36m\[m [34m\[m  
+[31m|[m [35m|[m * [34m|[m [33m3979b5b[m[33m ([m[1;31morigin/BackendToFrontendFetchData[m[33m)[m Update Frontend/Maggie/src/components/ProductList.jsx
+[31m|[m * [36m|[m [34m|[m   [33m927db72[m Merge pull request #8 from kalviumcommunity/feature/add_sellform
+[31m|[m [1;31m|[m[1;32m\[m [36m\[m [34m\[m  
+[31m|[m * [1;32m\[m [36m\[m [34m\[m   [33m109683a[m Merge pull request #7 from kalviumcommunity/feature/db-connection
+[31m|[m [1;33m|[m[1;34m\[m [1;32m\[m [36m\[m [34m\[m  
+[31m|[m * [1;34m\[m [1;32m\[m [36m\[m [34m\[m   [33m958696a[m Merge pull request #6 from kalviumcommunity/frontend_connect_backend
+[31m|[m [1;35m|[m[1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m  
+[31m|[m * [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m   [33mf475754[m Merge pull request #5 from kalviumcommunity/feature/product-card
+[31m|[m [31m|[m[32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m  
+[31m|[m * [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m   [33m7706f7d[m Merge pull request #4 from kalviumcommunity/frontend_setup_v2
+[31m|[m [33m|[m[34m\[m [32m\[m [1;36m\[m [1;34m\[m [1;32m\[m [36m\[m [34m\[m  
+* [33m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [34m|[m [33m9fb20ff[m deleted files
+[34m|[m [33m|[m[34m_[m[34m|[m[34m_[m[32m|[m[34m_[m[1;36m|[m[34m_[m[1;34m|[m[34m_[m[1;32m|[m[34m_[m[36m|[m[34m/[m  
+[34m|[m[34m/[m[33m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m   
+* [33m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [36m|[m [33m2ad48f8[m[33m ([m[1;31morigin/UpdateDelete[m[33m)[m Update and Delete functionality added
+[36m|[m [33m|[m[36m_[m[34m|[m[36m_[m[32m|[m[36m_[m[1;36m|[m[36m_[m[1;34m|[m[36m_[m[1;32m|[m[36m/[m  
+[36m|[m[36m/[m[33m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m   
+* [33m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [1;32m|[m [33mac639ed[m[33m ([m[1;32mBackendToFrontendFetchData[m[33m)[m backend to frontend
+[1;32m|[m [33m|[m[1;32m_[m[34m|[m[1;32m_[m[32m|[m[1;32m_[m[1;36m|[m[1;32m_[m[1;34m|[m[1;32m/[m  
+[1;32m|[m[1;32m/[m[33m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m   
+* [33m|[m [34m|[m [32m|[m [1;36m|[m [1;34m|[m [33m3db7f68[m[33m ([m[1;31morigin/feature/add_sellform[m[33m, [m[1;32mfeature/add_sellform[m[33m)[m done
+[1;34m|[m [33m|[m[1;34m_[m[34m|[m[1;34m_[m[32m|[m[1;34m_[m[1;36m|[m[1;34m/[m  
+[1;34m|[m[1;34m/[m[33m|[m [34m|[m [32m|[m [1;36m|[m   
+* [33m|[m [34m|[m [32m|[m [1;36m|[m [33mc145c80[m[33m ([m[1;31morigin/feature/db-connection[m[33m, [m[1;32mfeature/db-connection[m[33m, [m[1;32mfeature/add[m[33m)[m connection added
+[1;36m|[m [33m|[m[1;36m_[m[34m|[m[1;36m_[m[32m|[m[1;36m/[m  
+[1;36m|[m[1;36m/[m[33m|[m [34m|[m [32m|[m   
+* [33m|[m [34m|[m [32m|[m [33m022c856[m[33m ([m[1;31morigin/frontend_connect_backend[m[33m, [m[1;32mfrontend_connect_backend[m[33m)[m done
+[32m|[m [33m|[m[32m_[m[34m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m [34m|[m   
+* [33m|[m [34m|[m [33m9548637[m[33m ([m[1;31morigin/feature/product-card[m[33m, [m[1;32mfrontend_setup_v2[m[33m, [m[1;32mfeature/product-card[m[33m)[m done
+[34m|[m [33m|[m[34m/[m  
+[34m|[m[34m/[m[33m|[m   
+* [33m|[m [33m0d7e907[m[33m ([m[1;31morigin/frontend_setup_v2[m[33m)[m done
+[33m|[m[33m/[m  
+*   [33m20663d1[m Merge pull request #3 from kalviumcommunity/bruno
+[35m|[m[36m\[m  
+[35m|[m * [33mb58b2d4[m[33m ([m[1;31morigin/bruno[m[33m)[m done
+* [36m|[m [33m4f748ff[m Merge pull request #2 from kalviumcommunity/setup
+[1;31m|[m[36m\[m[36m|[m 
+[1;31m|[m * [33me5cff72[m[33m ([m[1;31morigin/setup[m[33m)[m done
+* [1;32m|[m [33ma25f533[m Merge pull request #1 from kalviumcommunity/very
+[1;33m|[m[1;32m\[m[1;32m|[m 
+[1;33m|[m * [33m9d3576d[m[33m ([m[1;31morigin/very[m[33m)[m done
+[1;33m|[m * [33m1b7b612[m done
+[1;33m|[m * [33mba898f2[m done
+[1;33m|[m * [33m7132517[m Updated Readme file
+* [1;34m|[m [33m8512671[m done
+[1;34m|[m[1;34m/[m  
+* [33mf776c72[m Add empty README file
+* [33m7ca8ef5[m Delete README.md
+* [33md6dd447[m Create README.md
+* [33m80788be[m Delete README.md
+* [33m31b71e9[m Create README.md
+* [33mfe00c5c[m[33m ([m[1;31morigin/cloudfare[m[33m)[m done
+* [33madbb5de[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m done
+[1;35m|[m * [33md0cbd5e[m[33m ([m[1;31morigin/mongo_db_connect[m[33m, [m[1;32mmongo_db_connect[m[33m)[m connected to database
+[1;35m|[m[1;35m/[m  
+* [33m5efe7f3[m done
+[1;36m|[m * [33mcbd1d66[m[33m ([m[1;32mvery[m[33m)[m Initial commit on new branch
+[1;36m|[m[1;36m/[m  
+* [33m821058c[m[33m ([m[1;32mcheckout[m[33m)[m add readme file
