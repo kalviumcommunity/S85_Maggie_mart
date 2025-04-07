@@ -4,15 +4,19 @@ import { useEffect, useState } from 'react';
 import ProductCard from './components/ProductCard';
 import SellForm from './components/SellForm';
 import BuyItems from './Pages/BuyItems';
+import UserValidation from './Pages/UserValidation';
 
 function App() {
   const [products, setProducts] = useState([]);
   const [setLoading] = useState(true);
   const [showSellForm, setShowSellForm] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (isAuthenticated) {
+      fetchProducts();
+    }
+  }, [isAuthenticated]);
 
   const fetchProducts = () => {
     fetch('http://localhost:5000/products')
@@ -29,6 +33,10 @@ function App() {
         setLoading(false);
       });
   };
+
+  if (!isAuthenticated) {
+    return <UserValidation onLoginSuccess={() => setIsAuthenticated(true)} />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
@@ -73,18 +81,20 @@ function App() {
               {showSellForm && <SellForm fetchProducts={fetchProducts} />}
 
               {/* Product Grid */}
-            
             </>
           }
         />
         <Route
           path="/buy-items"
-          element={<BuyItems products={products} setProducts={setProducts} />} // Pass setProducts here
+          element={<BuyItems products={products} setProducts={setProducts} />}
         />
       </Routes>
 
       {/* Footer */}
-      <footer className="bg-yellow-400 p-4 text-center text-gray-800 font-medium" style={{margin: "10px"}}>
+      <footer
+        className="bg-yellow-400 p-4 text-center text-gray-800 font-medium"
+        style={{ margin: '10px' }}
+      >
         © 2025 Maggie Mart. All rights reserved.
       </footer>
     </div>
