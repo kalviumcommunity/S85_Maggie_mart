@@ -8,6 +8,8 @@ import UserValidation from './Pages/UserValidation';
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState('');
   const [setLoading] = useState(true);
   const [showSellForm, setShowSellForm] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication
@@ -15,11 +17,13 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchProducts();
+      fetchUsers();
     }
   }, [isAuthenticated]);
 
-  const fetchProducts = () => {
-    fetch('http://localhost:5000/products')
+  const fetchProducts = (userId = '') => {
+    const url = userId ? `http://localhost:5000/products?created_by=${userId}` : 'http://localhost:5000/products';
+    fetch(url)
       .then((res) => {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
@@ -34,6 +38,19 @@ function App() {
       });
   };
 
+  const fetchUsers = () => {
+    fetch('http://localhost:5000/users')
+      .then((res) => res.json())
+      .then((data) => setUsers(data))
+      .catch((err) => console.error('Error fetching users:', err));
+  };
+
+  const handleUserChange = (e) => {
+    const userId = e.target.value;
+    setSelectedUser(userId);
+    fetchProducts(userId);
+  };
+
   if (!isAuthenticated) {
     return <UserValidation onLoginSuccess={() => setIsAuthenticated(true)} />;
   }
@@ -46,6 +63,26 @@ function App() {
           🛒 Maggie Mart
         </h1>
       </header>
+
+      {/* User Dropdown */}
+      <div className="p-4">
+        <label htmlFor="user-select" className="block text-gray-700 font-bold mb-2">
+          Filter by User:
+        </label>
+        <select
+          id="user-select"
+          value={selectedUser}
+          onChange={handleUserChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        >
+          <option value="">All Users</option>
+          {users.map((user) => (
+            <option key={user._id} value={user._id}>
+              {user.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Routes */}
       <Routes>
@@ -81,6 +118,23 @@ function App() {
               {showSellForm && <SellForm fetchProducts={fetchProducts} />}
 
               {/* Product Grid */}
+              <div className="p-8">
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Available Items</h2>
+                {products.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {products.map((product, index) => (
+                      <ProductCard
+                        key={index}
+                        product={product}
+                        onDelete={() => fetchProducts(selectedUser)}
+                        onUpdate={() => fetchProducts(selectedUser)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-600">No items available for purchase.</p>
+                )}
+              </div>
             </>
           }
         />

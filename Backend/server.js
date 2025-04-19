@@ -30,16 +30,15 @@ app.get('/', (req, res) => {
   res.json({ dbStatus: mongoose.connection.readyState === 1 ? 'Connected' : 'Not Connected' });
 });
 
-// Create (Sell an Item)
 app.post('/sell', async (req, res) => {
   try {
-    const { ProductName, Price, Quantity, RoomNumber, Contact } = req.body;
+    const { ProductName, Price, Quantity, RoomNumber, Contact, created_by } = req.body;
 
-    if (!ProductName || !Price || !Quantity || !RoomNumber || !Contact) {
-      return res.status(400).json({ error: "All fields are required." });
+    if (!ProductName || !Price || !Quantity || !RoomNumber || !Contact || !created_by) {
+      return res.status(400).json({ error: "All fields are required, including 'created_by'." });
     }
 
-    const created = await sell.create({ ProductName, Price, Quantity, RoomNumber, Contact });
+    const created = await sell.create({ ProductName, Price, Quantity, RoomNumber, Contact, created_by });
     res.status(201).json(created);
 
   } catch (err) {
@@ -48,10 +47,11 @@ app.post('/sell', async (req, res) => {
   }
 });
 
-// Read (Get all Sell Items)
 app.get('/products', async (req, res) => {
   try {
-    const products = await sell.find(); // ✅ Using sell model
+    const { created_by } = req.query;
+    const filter = created_by ? { created_by } : {};
+    const products = await sell.find(filter).populate('created_by', 'name email'); // Populate user details
     return res.json(products);
   } catch (err) {
     console.error("❌ Error fetching products:", err.message);
