@@ -2,7 +2,7 @@ require('dotenv').config({ path: './config/.env' });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const jwt = require("jsonwebtoken")
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -143,13 +143,16 @@ app.post('/login', async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
+     
+    const token = jwt.sign({userid : user._id} , process.env.JWT_SECRET , {expiresIn : "24h"})
     res.cookie("username", user.name, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 24 * 60 * 60 * 1000  // 24 hours
         });
 
-    res.status(200).json({ message: 'Login successful' });
+
+    res.status(200).json({ message: 'Login successful' , Token : token });
   } catch (err) {
     console.error('Error during login:', err.message);
     res.status(500).json({ error: 'Internal server error' });
